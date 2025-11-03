@@ -15,7 +15,7 @@ WORKSHEET_NAME = "cashflow2"
 def load_google_sheets():
     try:
         # Load credentials directly from Streamlit secrets
-        creds_info = st.secrets["GOOGLE_CREDENTIALS"]
+        creds_info = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
         creds = Credentials.from_service_account_info(
             creds_info,
             scopes=[
@@ -96,3 +96,4 @@ if user_input:
 
     # Add assistant message to memory
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
