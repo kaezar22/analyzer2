@@ -15,7 +15,7 @@ st.set_page_config(page_title="Finance Chatbot", page_icon="💬", layout="wide"
 st.title("💬 Financial Chatbot with Google Sheets")
 
 # Get values from Streamlit secrets
-SHEET_ID = st.secrets("SPREADSHEET_ID")
+SHEET_ID = st.secrets["SPREADSHEET_ID"]
 WORKSHEET_NAME = "cashflow2"
 
 # Convert Streamlit secrets AttrDict → normal dict
@@ -90,6 +90,7 @@ if user_input:
 
     # Add assistant message to memory
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
 
 
 
