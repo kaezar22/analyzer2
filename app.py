@@ -10,7 +10,7 @@ from google.oauth2.service_account import Credentials
 load_dotenv()
 
 # === CONFIGURATION ===
-SHEET_ID = st.secrets["SPREADSHEET_KEY"] 
+SHEET_ID = st.secrets["SPREADSHEET_ID"] 
 creds_dict = st.secrets["GOOGLE_CREDENTIALS"]
 WORKSHEET_NAME = "cashflow2"
 
@@ -84,5 +84,6 @@ if user_input:
 
     # Add assistant message to memory
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
 
 
