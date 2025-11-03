@@ -1,4 +1,5 @@
 import os
+import json
 import streamlit as st
 import pandas as pd
 import gspread
@@ -6,22 +7,26 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from google.oauth2.service_account import Credentials
 
-# Load environment variables
+# Load environment variables (for local testing)
 load_dotenv()
 
 # === CONFIGURATION ===
-SHEET_ID = st.secrets["SPREADSHEET_ID"] 
-creds_dict = st.secrets["GOOGLE_CREDENTIALS"]
-WORKSHEET_NAME = "cashflow2"
-
 st.set_page_config(page_title="Finance Chatbot", page_icon="💬", layout="wide")
 st.title("💬 Financial Chatbot with Google Sheets")
+
+# Get values from Streamlit secrets
+SHEET_ID = st.secrets["SPREADSHEET_ID"]
+WORKSHEET_NAME = "cashflow2"
+
+# Convert TOML credentials (with escaped newlines) into usable JSON
+google_creds_dict = st.secrets["GOOGLE_CREDENTIALS"]
+google_creds_json = json.loads(json.dumps(google_creds_dict))
 
 # === FUNCTION: Load Google Sheet ===
 def load_google_sheet(sheet_id, worksheet_name):
     """Connect to Google Sheets and return a pandas DataFrame"""
     scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
-    creds = Credentials.from_service_account_info(creds_dict, scopes=scopes)
+    creds = Credentials.from_service_account_info(google_creds_json, scopes=scopes)
     client = gspread.authorize(creds)
     sheet = client.open_by_key(sheet_id)
     worksheet = sheet.worksheet(worksheet_name)
@@ -84,6 +89,7 @@ if user_input:
 
     # Add assistant message to memory
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
 
 
 
