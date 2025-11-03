@@ -18,15 +18,16 @@ st.title("💬 Financial Chatbot with Google Sheets")
 SHEET_ID = st.secrets["SPREADSHEET_ID"]
 WORKSHEET_NAME = "cashflow2"
 
-# Convert TOML credentials (with escaped newlines) into usable JSON
-google_creds_dict = st.secrets["GOOGLE_CREDENTIALS"]
-google_creds_json = json.loads(json.dumps(google_creds_dict))
+# Convert Streamlit secrets AttrDict → normal dict
+google_creds_dict = dict(st.secrets["GOOGLE_CREDENTIALS"])
+
+# Create credentials directly
+scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
+creds = Credentials.from_service_account_info(google_creds_dict, scopes=scopes)
 
 # === FUNCTION: Load Google Sheet ===
 def load_google_sheet(sheet_id, worksheet_name):
     """Connect to Google Sheets and return a pandas DataFrame"""
-    scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
-    creds = Credentials.from_service_account_info(google_creds_json, scopes=scopes)
     client = gspread.authorize(creds)
     sheet = client.open_by_key(sheet_id)
     worksheet = sheet.worksheet(worksheet_name)
@@ -89,6 +90,7 @@ if user_input:
 
     # Add assistant message to memory
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
 
 
 
