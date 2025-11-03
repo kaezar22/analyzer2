@@ -15,11 +15,11 @@ st.set_page_config(page_title="Finance Chatbot", page_icon="💬", layout="wide"
 st.title("💬 Financial Chatbot with Google Sheets")
 
 # Get values from Streamlit secrets
-SHEET_ID = st.secrets["SPREADSHEET_ID"]
+SHEET_ID = st.secrets("SPREADSHEET_ID")
 WORKSHEET_NAME = "cashflow2"
 
 # Convert Streamlit secrets AttrDict → normal dict
-google_creds_dict = dict(st.secrets["GOOGLE_CREDENTIALS"])
+google_creds_dict = dict(st.secrets("GOOGLE_CREDENTIALS"))
 
 # Create credentials directly
 scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
@@ -55,7 +55,7 @@ except Exception as e:
     df = None
 
 # === Initialize OpenAI ===
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+client = OpenAI(api_key=st.secrets("OPENAI_API_KEY"))
 
 # === Display previous chat messages ===
 for msg in st.session_state.messages[1:]:
@@ -90,6 +90,7 @@ if user_input:
 
     # Add assistant message to memory
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
 
 
 
