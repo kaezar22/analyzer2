@@ -1,0 +1,6 @@
+streamlit
+pandas
+openai>=1.0.0
+gspread
+google-auth
+python-dotenv
