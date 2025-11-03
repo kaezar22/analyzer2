@@ -19,7 +19,7 @@ SHEET_ID = st.secrets["SPREADSHEET_ID"]
 WORKSHEET_NAME = "cashflow2"
 
 # Convert Streamlit secrets AttrDict → normal dict
-google_creds_dict = dict(st.secrets["GOOGLE_CREDENTIALS"])
+google_creds_dict = st.secrets["GOOGLE_CREDENTIALS"]
 
 # Create credentials directly
 scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
@@ -90,6 +90,7 @@ if user_input:
 
     # Add assistant message to memory
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
 
 
 
