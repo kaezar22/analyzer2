@@ -10,7 +10,7 @@ from google.oauth2.service_account import Credentials
 load_dotenv()
 
 # === CONFIGURATION ===
-SHEET_ID = st.secrets("SPREADSHEET_KEY") # 👈 replace this with your sheet ID
+SHEET_ID = st.secrets["SPREADSHEET_KEY"] 
 creds_dict = st.secrets["GOOGLE_CREDENTIALS"]
 WORKSHEET_NAME = "cashflow2"
 
@@ -49,7 +49,7 @@ except Exception as e:
     df = None
 
 # === Initialize OpenAI ===
-client = OpenAI(api_key=st.secrets("OPENAI_API_KEY"))
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 # === Display previous chat messages ===
 for msg in st.session_state.messages[1:]:
@@ -84,4 +84,5 @@ if user_input:
 
     # Add assistant message to memory
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
 
