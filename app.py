@@ -74,10 +74,11 @@ def load_sheet(sheet_name="cashflow2"):
             if col in df.columns:
                 df[col] = df[col].astype(str).str.strip().str.lower()
 
-        return df, None
+        return df
 
     except Exception as e:
-        return None, str(e)
+        return None
+        
 # LLM interpreter
 # ---------------------------
 def ask_llm_for_intent(question: str):
@@ -382,6 +383,7 @@ for msg in reversed(st.session_state.get("history", [])[-20:]):
 if st.sidebar.button("🧹 Clear conversation"):
     st.session_state["history"] = []
     st.sidebar.success("Chat memory cleared.")
+
 
 
 
