@@ -130,6 +130,21 @@ tools = [
             }
         }
     },
+    {
+    "type": "function",
+    "function": {
+        "name": "summarize_expense",
+        "description": "Get the total expense filtered by category and/or month",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "category": {"type": "string"},
+                "month": {"type": "string"}
+            },
+            "required": []
+        }
+    }
+},
 ]
 
 # --- Chat input ---
@@ -175,3 +190,4 @@ if user_input:
                 st.markdown(reply)
 
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
