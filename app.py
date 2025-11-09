@@ -267,7 +267,7 @@ if st.sidebar.button("Reload sheet"):
 sheet_tab = "cashflow2"
 sheet_key_input = SPREADSHEET_ID  # from .env
 
-df = load_sheet(sheet_name=sheet_tab, spreadsheet_key=sheet_key_input)
+df = load_sheet(sheet_name=sheet_tab)
 
 # --- Status messages ---
 if df is None:
@@ -382,6 +382,7 @@ for msg in reversed(st.session_state.get("history", [])[-20:]):
 if st.sidebar.button("🧹 Clear conversation"):
     st.session_state["history"] = []
     st.sidebar.success("Chat memory cleared.")
+
 
 
 
