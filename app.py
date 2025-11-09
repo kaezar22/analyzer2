@@ -77,19 +77,23 @@ for msg in st.session_state.messages[1:]:
 
 # --- Helper: detect plot or summary requests ---
 def detect_intent(user_input: str):
-    """Very basic pattern matcher for intent classification."""
+    """Improved multilingual pattern matcher for financial intents."""
     text = user_input.lower()
-    if any(word in text for word in ["grafica", "gráfico", "plot", "chart", "mostrar tendencia"]):
-        if "categoria" in text:
-            return "plot_category"
-        elif "mes" in text or "tiempo" in text or "trend" in text:
-            return "plot_trend"
-        elif "pie" in text or "proporción" in text:
-            return "plot_pie"
-    elif any(word in text for word in ["gasto", "gasté", "cuánto gasté", "ingreso", "total"]):
-        return "summary"
-    return "chat"
 
+    # --- Plotting intents ---
+    if any(word in text for word in ["grafica", "gráfico", "plot", "chart", "mostrar tendencia", "ver tendencia", "visualiza"]):
+        if "categoria" in text or "category" in text:
+            return "plot_category"
+        elif any(w in text for w in ["mes", "tiempo", "trend", "month", "semana"]):
+            return "plot_trend"
+        elif any(w in text for w in ["pie", "proporción", "porcentaje", "distribución", "composición"]):
+            return "plot_pie"
+
+    # --- Expense summary intent ---
+    if re.search(r"(cu[aá]nto|gasto|gast[ée]|spend|spent|total|ingreso)", text):
+        return "summary"
+
+    return "chat"
 
 # --- Chat input ---
 user_input = st.chat_input("Ask something about your cashflow...")
@@ -156,3 +160,4 @@ if user_input:
 
     # Add assistant message to memory
     st.session_state.messages.append({"role": "assistant", "content": reply})
+
