@@ -24,7 +24,7 @@ def format_money(value):
     
 # Configuration / Secrets
 # ---------------------------
-OPENAI_API_KEY = st.secrets("OPENAI_API_KEY")
+OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 GOOGLE_CREDENTIALS = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
 SPREADSHEET_ID = st.secrets["SPREADSHEET_ID"]
 
@@ -382,4 +382,5 @@ for msg in reversed(st.session_state.get("history", [])[-20:]):
 if st.sidebar.button("🧹 Clear conversation"):
     st.session_state["history"] = []
     st.sidebar.success("Chat memory cleared.")
+
 
