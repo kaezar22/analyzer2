@@ -83,6 +83,7 @@ def summarize_expense(df, category=None, month=None):
 
     # Ensure 'fecha' is a datetime
     df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce')
+    df["valor"] = pd.to_numeric(df["valor"], errors="coerce").fillna(0)
     df['mes'] = df['fecha'].dt.month_name().str.lower()
 
     filtered = df.copy()
