@@ -74,6 +74,25 @@ def pie_chart(series: pd.Series, title: Optional[str] = None):
     st.pyplot(fig)
     plt.close(fig)
 
+def summarize_expense(df, category=None, month=None):
+    """
+    Return total expense filtered by category and/or month.
+    Example: summarize_expense(df, category='taxi', month='noviembre')
+    """
+    import pandas as pd
+
+    # Ensure 'fecha' is a datetime
+    df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce')
+    df['mes'] = df['fecha'].dt.month_name().str.lower()
+
+    filtered = df.copy()
+    if category:
+        filtered = filtered[filtered['detalle'].str.contains(category, case=False, na=False)]
+    if month:
+        filtered = filtered[filtered['mes'].str.contains(month, case=False, na=False)]
+
+    total = filtered['valor'].sum()
+    return {"respuesta": f"Gastaste {total:,.0f} en {category or 'total'} en {month or 'todos los meses'}."}
 
 # -- small helper to display a dataframe prettily in streamlit
 def display_table(df: pd.DataFrame, n: int = 20):
