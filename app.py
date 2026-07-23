@@ -78,7 +78,7 @@ def load_sheet(sheet_name="cashflow2"):
 
     except Exception as e:
         st.exception(e)
-        return Nonee
+        return None
         
 # LLM interpreter
 # ---------------------------
