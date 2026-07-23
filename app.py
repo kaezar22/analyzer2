@@ -55,7 +55,17 @@ def load_sheet(sheet_name="cashflow2"):
         worksheet = sh.worksheet(sheet_name)
 
         # --- Read the sheet data ---
-        data = worksheet.get_all_records()
+        data = worksheet.get_all_records(
+            expected_headers=[
+                "fecha",
+                "categoria",
+                "detalle",
+                "valor",
+                "medio",
+                "mes",
+                "dow"
+            ]
+        )
         df = pd.DataFrame(data)
 
         # --- Clean and enrich the dataframe ---
